@@ -1,0 +1,39 @@
+#!/usr/bin/env node
+
+const path = require('path');
+
+process.on('uncaughtException', (err) => {
+  console.error(err);
+  process.exit(1);
+});
+
+const tabtab = require('tabtab');
+
+if (process.argv.slice(2)[0] === 'completion') return tabtab.complete('cardstack-extension-manager', function(err, data) {
+  if(err || !data) return;
+
+  if(/^--\w?/.test(data.last)) return tabtab.log(['help', 'version'], data, '--');
+  if(/^-\w?/.test(data.last)) return tabtab.log(['n', 'o', 'd', 'e'], data, '-');
+
+  tabtab.log([create.name], data);
+});
+
+const program = require('commander')
+  .version(require('../package.json').version);
+
+const create = require('./cardstack-extension-manager-create');
+const package = require('./cardstack-extension-manager-package');
+const run = require('./cardstack-extension-manager-run');
+
+let argv = process.argv;
+let commandUsed = path.basename(argv[1]);
+
+if (commandUsed === 'cdem') {
+  argv[1] = argv[1].replace('cdem', 'cardstack-extension-manager');
+}
+
+program
+  .command(create.name, create.description)
+  .command(package.name, package.description)
+  .command(run.name, run.description)
+  .parse(argv);
