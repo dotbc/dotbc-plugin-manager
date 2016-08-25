@@ -1,7 +1,7 @@
 {
-  "name": "cardstack-plugin-manager",
+  "name": "dotbc-plugin-manager",
   "version": "0.0.0",
-  "description": "utility project for creating, verifying, and installing cardstack plugins",
+  "description": "utility project for creating, verifying, and installing dotbc plugins",
   "main": "index.js",
   "dependencies": {
     "commander": "^2.9.0",

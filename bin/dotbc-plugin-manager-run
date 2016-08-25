@@ -4,7 +4,7 @@ const program = require('commander')
   .version(require('../package.json').version);
 
 const name = 'run <plugin-main-path>'
-const description = 'runs an plugin project with IPC communication to the cardstack-desktop app';
+const description = 'runs an plugin project with IPC communication to the dotbc-desktop app';
 const usage = `\n  usage:\n\n    ${name} - ${description}\n`;
 
 if (module.parent) {
@@ -19,13 +19,13 @@ program
 
       const path = require('path');
       const run = require('../lib/run');
-
+console.log('!!!!1', process.cwd())
       const fullFilePath = mainFilePath[0] === '.' ? 
         path.join(process.cwd(), mainFilePath) : 
         path.normalize(mainFilePath);
       
       process.chdir(path.dirname(fullFilePath));
-
+console.log('!!!!2', process.cwd())
       run(fullFilePath, (err) => {
         if (err) throw err;
 
