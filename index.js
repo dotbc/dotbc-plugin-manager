@@ -21,8 +21,6 @@ const set = require('lodash.set');
  *    const dbcpm = require('dotbc-plugin-manager');
  *    const Plugin = require('./plugin');
  *    
- *    let interval;
- *    
  *    // register resource paths to for expansion from relative to absolute paths
  *    dbcpm.registerResourcePath('capabilities.search.imageUrl');
  *    dbcpm.registerResourcePath('capabilities.search.searchImageUrl');
