@@ -23,11 +23,11 @@ program
       const fullFilePath = mainFilePath[0] === '.' ? 
         path.join(process.cwd(), mainFilePath) : 
         path.normalize(mainFilePath);
+      
+      process.chdir(path.dirname(fullFilePath));
 
       run(fullFilePath, (err) => {
         if (err) throw err;
-
-        console.log(`started extension at \'${mainFilePath}\'...`);
 
       });
 
