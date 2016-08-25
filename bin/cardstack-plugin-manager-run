@@ -3,8 +3,8 @@
 const program = require('commander')
   .version(require('../package.json').version);
 
-const name = 'run <extension-main-path>'
-const description = 'runs an extension project with IPC communication to the cardstack-desktop app';
+const name = 'run <plugin-main-path>'
+const description = 'runs an plugin project with IPC communication to the cardstack-desktop app';
 const usage = `\n  usage:\n\n    ${name} - ${description}\n`;
 
 if (module.parent) {

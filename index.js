@@ -1,4 +1,4 @@
-const debug = require('debug')('cardstack-extension-manager');
+const debug = require('debug')('cardstack-plugin-manager');
 const events = require('events');
 const EventEmitter = events.EventEmitter;
 const get = require('lodash.get');
@@ -8,7 +8,7 @@ const set = require('lodash.set');
 /**
  * Helper class used to load, connect, and activate dotBC Plugins.
  *
- * @class {Function} CardstackExtensionManager
+ * @class {Function} CardstackPluginManager
  * @requires events
  * @requires debug
  * @requires lodash.get
@@ -18,7 +18,7 @@ const set = require('lodash.set');
  * @example
  *
  *    // example plugin index.js mainFile
- *    const cdem = require('cardstack-extension-manager');
+ *    const cdem = require('cardstack-plugin-manager');
  *    const Plugin = require('./plugin');
  *    
  *    let interval;
@@ -32,11 +32,11 @@ const set = require('lodash.set');
  *    };
  *    
  *    module.exports.deactivate = function () {
- *      console.log('extension deactivated');
+ *      console.log('plugin deactivated');
  *    }
  *
  */
-class CardstackExtensionManager extends EventEmitter {
+class CardstackPluginManager extends EventEmitter {
   constructor () {
     super();
     this.commandNames = new Map();
@@ -228,4 +228,4 @@ class CardstackExtensionManager extends EventEmitter {
   }
 }
 
-module.exports = new CardstackExtensionManager();
+module.exports = new CardstackPluginManager();

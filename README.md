@@ -1,12 +1,12 @@
-# cardstack-extension-manager
+# cardstack-plugin-manager
 
-#### cardstack-extension-manager is a utility for creating, verifying, and installing cardstack plugins. 
+#### cardstack-plugin-manager is a utility for creating, verifying, and installing cardstack plugins.
 
-cardstack-desktop uses cardstack-extension-manager to load and run plugins, and cardstack-extension-manager provides utilities plugin makers can leverage to develop plugins. 
+cardstack-desktop uses cardstack-plugin-manager to load and run plugins, and cardstack-plugin-manager provides utilities plugin makers can leverage to develop plugins.
 
 ```javascript
 // example plugin index.js mainFile
-const cdem = require('cardstack-extension-manager');
+const cdem = require('cardstack-plugin-manager');
 const Plugin = require('./plugin');
 
 let interval;
@@ -20,7 +20,7 @@ module.exports.activate = function (cb) {
 };
 
 module.exports.deactivate = function () {
-  console.log('extension deactivated');
+  console.log('plugin deactivated');
 }
 
 /// matching package.json:
@@ -50,7 +50,7 @@ module.exports.deactivate = function () {
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "cardstack-extension-manager": "git+ssh://git@github.com/dotbc/cardstack-extension-manager.git",
+    "cardstack-plugin-manager": "git+ssh://git@github.com/dotbc/cardstack-plugin-manager.git",
     "debug": "^2.2.0",
     "lodash": "^4.15.0",
     "superagent": "^2.2.0"
@@ -58,52 +58,51 @@ module.exports.deactivate = function () {
 }
 
 
-
 ```
 
-## CardstackExtensionManager
-{Function} CardstackExtensionManager
+## CardstackPluginManager
+{Function} CardstackPluginManager
 
 **Kind**: global class  
 **Requires**: <code>module:events</code>, <code>module:debug</code>, <code>module:lodash.get</code>, <code>module:path</code>, <code>module:lodash.set</code>  
 **License**: MIT  
 
-* [CardstackExtensionManager](#CardstackExtensionManager)
-    * [._onMessage(msg)](#CardstackExtensionManager+_onMessage)
-    * [._activatePluginCapabilities(msg)](#CardstackExtensionManager+_activatePluginCapabilities)
-    * [.activateRpcMethod(plugin, name, type)](#CardstackExtensionManager+activateRpcMethod)
-    * [.activate(plugin, name, type)](#CardstackExtensionManager+activate)
-    * [.connect(pkg)](#CardstackExtensionManager+connect)
-    * [.load(pkg)](#CardstackExtensionManager+load)
-    * [.registerResourcePath(propertyPath)](#CardstackExtensionManager+registerResourcePath)
-    * [.sendEvent(name, params)](#CardstackExtensionManager+sendEvent)
+* [CardstackPluginManager](#CardstackPluginManager)
+    * [._onMessage(msg)](#CardstackPluginManager+_onMessage)
+    * [._activatePluginCapabilities(msg)](#CardstackPluginManager+_activatePluginCapabilities)
+    * [.activateRpcMethod(plugin, name, type)](#CardstackPluginManager+activateRpcMethod)
+    * [.activate(plugin, name, type)](#CardstackPluginManager+activate)
+    * [.connect(pkg)](#CardstackPluginManager+connect)
+    * [.load(pkg)](#CardstackPluginManager+load)
+    * [.registerResourcePath(propertyPath)](#CardstackPluginManager+registerResourcePath)
+    * [.sendEvent(name, params)](#CardstackPluginManager+sendEvent)
 
-<a name="CardstackExtensionManager+_onMessage"></a>
+<a name="CardstackPluginManager+_onMessage"></a>
 
-### cardstackExtensionManager._onMessage(msg)
+### cardstackPluginManager._onMessage(msg)
 Internal: handles messages passed to plugin process via ipc.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Object</code> | message object passed from main process to plugin process. |
 
-<a name="CardstackExtensionManager+_activatePluginCapabilities"></a>
+<a name="CardstackPluginManager+_activatePluginCapabilities"></a>
 
-### cardstackExtensionManager._activatePluginCapabilities(msg)
+### cardstackPluginManager._activatePluginCapabilities(msg)
 Internal: iterates through and activates all plugin capabilities provided in 
 package.json
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | msg | <code>Object</code> | message object passed from main process to plugin process. |
 
-<a name="CardstackExtensionManager+activateRpcMethod"></a>
+<a name="CardstackPluginManager+activateRpcMethod"></a>
 
-### cardstackExtensionManager.activateRpcMethod(plugin, name, type)
+### cardstackPluginManager.activateRpcMethod(plugin, name, type)
 Wires up IPC mechanics required to perform rpc from the dotBC main process, via the
 renderer process, to plugin processes and vice versa. 
 
@@ -111,7 +110,7 @@ activateRpcMethod creates a strategy function used to process incoming messages 
 to the plugin process via IPC. Functions route incoming message parameters to be applied 
 to command methods or event handlers defined on the provided plugin instance.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -119,16 +118,16 @@ to command methods or event handlers defined on the provided plugin instance.
 | name | <code>String</code> | the name of the command or event. |
 | type | <code>String</code> | type method type [command|event]. |
 
-<a name="CardstackExtensionManager+activate"></a>
+<a name="CardstackPluginManager+activate"></a>
 
-### cardstackExtensionManager.activate(plugin, name, type)
+### cardstackPluginManager.activate(plugin, name, type)
 Third stage of dotBC plugin loading lifecycle. the activate method is called after
 a plugin is connected. this method in turn calls the plugin.activate method definted 
 on the plugin instance being started. after the plugin's activate function completes
 and config-defined capabilities and their commands and events are activated. When
 complete, this function emits an 'activated' event.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -136,53 +135,53 @@ complete, this function emits an 'activated' event.
 | name | <code>String</code> | the name of the command or event. |
 | type | <code>String</code> | type method type [command|event]. |
 
-<a name="CardstackExtensionManager+connect"></a>
+<a name="CardstackPluginManager+connect"></a>
 
-### cardstackExtensionManager.connect(pkg)
+### cardstackPluginManager.connect(pkg)
 Second stage of dotBC plugin loading lifecycle. Connect sends a message
 to the main process, signaling that a plugin has started but not yet activated. Connect
 emits a 'connected' event locally.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | pkg | <code>Object</code> | plugin package.json object |
 
-<a name="CardstackExtensionManager+load"></a>
+<a name="CardstackPluginManager+load"></a>
 
-### cardstackExtensionManager.load(pkg)
+### cardstackPluginManager.load(pkg)
 First stage of dotBC plugin loading lifecycle. the activate method is called after
 a plugin is connected. this method in turn calls the plugin.activate method definted 
 on the plugin instance being started. after the plugin's activate function completes
 and config-defined capabilities and their commands and events are activated. When
 complete, this function emits an 'activated' event.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | pkg | <code>Object</code> | plugin package.json object |
 
-<a name="CardstackExtensionManager+registerResourcePath"></a>
+<a name="CardstackPluginManager+registerResourcePath"></a>
 
-### cardstackExtensionManager.registerResourcePath(propertyPath)
+### cardstackPluginManager.registerResourcePath(propertyPath)
 Registers a path defined in a plugin's package.json to be expanded from relative
 to absolute. Not registering a resource path for expansion may result in 
 resources being improperly rendered.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | propertyPath | <code>String</code> | dot separated path of json property, located in a plugin's package.json structure |
 
-<a name="CardstackExtensionManager+sendEvent"></a>
+<a name="CardstackPluginManager+sendEvent"></a>
 
-### cardstackExtensionManager.sendEvent(name, params)
+### cardstackPluginManager.sendEvent(name, params)
 Sends an event to the main process via an IPC message.
 
-**Kind**: instance method of <code>[CardstackExtensionManager](#CardstackExtensionManager)</code>  
+**Kind**: instance method of <code>[CardstackPluginManager](#CardstackPluginManager)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |

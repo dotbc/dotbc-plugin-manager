@@ -9,7 +9,7 @@ process.on('uncaughtException', (err) => {
 
 const tabtab = require('tabtab');
 
-if (process.argv.slice(2)[0] === 'completion') return tabtab.complete('cardstack-extension-manager', function(err, data) {
+if (process.argv.slice(2)[0] === 'completion') return tabtab.complete('cardstack-plugin-manager', function(err, data) {
   if(err || !data) return;
 
   if(/^--\w?/.test(data.last)) return tabtab.log(['help', 'version'], data, '--');
@@ -21,15 +21,13 @@ if (process.argv.slice(2)[0] === 'completion') return tabtab.complete('cardstack
 const program = require('commander')
   .version(require('../package.json').version);
 
-const create = require('./cardstack-extension-manager-create');
-const package = require('./cardstack-extension-manager-package');
-const run = require('./cardstack-extension-manager-run');
+const run = require('./cardstack-plugin-manager-run');
 
 let argv = process.argv;
 let commandUsed = path.basename(argv[1]);
 
 if (commandUsed === 'cdem') {
-  argv[1] = argv[1].replace('cdem', 'cardstack-extension-manager');
+  argv[1] = argv[1].replace('cdem', 'cardstack-plugin-manager');
 }
 
 program
