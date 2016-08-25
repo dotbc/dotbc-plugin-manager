@@ -1,4 +1,65 @@
-<a name="CardstackExtensionManager"></a>
+# cardstack-extension-manager
+
+#### cardstack-extension-manager is a utility for creating, verifying, and installing cardstack plugins. 
+
+cardstack-desktop uses cardstack-extension-manager to load and run plugins, and cardstack-extension-manager provides utilities plugin makers can leverage to develop plugins. 
+
+```javascript
+// example plugin index.js mainFile
+const cdem = require('cardstack-extension-manager');
+const Plugin = require('./plugin');
+
+let interval;
+
+// register resource paths to for expansion from relative to absolute paths
+cdem.registerResourcePath('capabilities.search.imageUrl');
+cdem.registerResourcePath('capabilities.search.searchImageUrl');
+
+module.exports.activate = function (cb) {
+  cb(null, new Plugin());
+};
+
+module.exports.deactivate = function () {
+  console.log('extension deactivated');
+}
+
+/// matching package.json:
+
+{
+  "name": "my-plugin",
+  "displayName": "My Plugin",
+  "version": "0.0.0",
+  "description": "example plugin for dotBC",
+  "publisher": "dotBC",
+  "main": "index.js",
+  "capabilities": {
+    "search": {
+      "name": "My Search API",
+      "description": "Look up artists on my api.",
+      "imageUrl": "public/images/icon.png",
+      "searchImageUrl": "public/images/icon-search.png",
+      "supportedSearchTypes": [
+        "artist", "work"
+      ],
+      "commands": [
+        "search",
+        "getDetails"
+      ]
+    }
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cardstack-extension-manager": "git+ssh://git@github.com/dotbc/cardstack-extension-manager.git",
+    "debug": "^2.2.0",
+    "lodash": "^4.15.0",
+    "superagent": "^2.2.0"
+  }
+}
+
+
+
+```
 
 ## CardstackExtensionManager
 {Function} CardstackExtensionManager
