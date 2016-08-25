@@ -2,7 +2,7 @@
 
 #### cardstack-plugin-manager is a utility for creating, verifying, and installing cardstack plugins.
 
-cardstack-desktop uses cardstack-plugin-manager to load and run plugins, and cardstack-plugin-manager provides utilities plugin makers can leverage to develop plugins.
+cardstack-desktop uses cardstack-plugin-manager to load and run plugins, and cardstack-plugin-manager provides utilities plugin makers can leverage to develop additional functionality for cardstack-desktop.
 
 ```javascript
 // example plugin index.js mainFile
