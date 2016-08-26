@@ -1,4 +1,4 @@
-const debug = require('debug')('cardstack-plugin-manager');
+const debug = require('debug')('dotbc-plugin-manager');
 const events = require('events');
 const EventEmitter = events.EventEmitter;
 const get = require('lodash.get');
@@ -8,7 +8,7 @@ const set = require('lodash.set');
 /**
  * Helper class used to load, connect, and activate dotBC Plugins.
  *
- * @class {Function} CardstackPluginManager
+ * @class {Function} PluginManager
  * @requires events
  * @requires debug
  * @requires lodash.get
@@ -18,14 +18,12 @@ const set = require('lodash.set');
  * @example
  *
  *    // example plugin index.js mainFile
- *    const cdem = require('cardstack-plugin-manager');
+ *    const dbcpm = require('dotbc-plugin-manager');
  *    const Plugin = require('./plugin');
  *    
- *    let interval;
- *    
  *    // register resource paths to for expansion from relative to absolute paths
- *    cdem.registerResourcePath('capabilities.search.imageUrl');
- *    cdem.registerResourcePath('capabilities.search.searchImageUrl');
+ *    dbcpm.registerResourcePath('capabilities.search.imageUrl');
+ *    dbcpm.registerResourcePath('capabilities.search.searchImageUrl');
  *    
  *    module.exports.activate = function (cb) {
  *      cb(null, new Plugin());
@@ -36,7 +34,7 @@ const set = require('lodash.set');
  *    }
  *
  */
-class CardstackPluginManager extends EventEmitter {
+class PluginManager extends EventEmitter {
   constructor () {
     super();
     this.commandNames = new Map();
@@ -206,7 +204,7 @@ class CardstackPluginManager extends EventEmitter {
     * @param  {String} propertyPath  dot separated path of json property, located in a plugin's package.json structure
     */
   registerResourcePath (propertyPath) {
-    this.on('loaded', (pkg) => {
+    this.once('loaded', (pkg) => {
       var relativePath = get(pkg, propertyPath);
       var absolutePath = path.join(process.cwd(), relativePath);
       set(pkg, propertyPath, absolutePath);
@@ -228,4 +226,4 @@ class CardstackPluginManager extends EventEmitter {
   }
 }
 
-module.exports = new CardstackPluginManager();
+module.exports = new PluginManager();
