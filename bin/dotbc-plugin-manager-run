@@ -19,13 +19,13 @@ program
 
       const path = require('path');
       const run = require('../lib/run');
-console.log('!!!!1', process.cwd())
+
       const fullFilePath = mainFilePath[0] === '.' ? 
         path.join(process.cwd(), mainFilePath) : 
         path.normalize(mainFilePath);
       
       process.chdir(path.dirname(fullFilePath));
-console.log('!!!!2', process.cwd())
+
       run(fullFilePath, (err) => {
         if (err) throw err;
 
